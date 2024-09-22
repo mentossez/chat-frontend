@@ -5,7 +5,7 @@
          <div class="message row">
             <span class="message-header">
                <span class="user-name col-md-12">&#64;{{chat.username}}</span>
-               <button *ngIf="isMostLikedWindow" (click)="dismissChat(chat)" class="btn-close btn-close-white"></button>
+               <button *ngIf="isMostLikedWindow && isAdmin" (click)="dismissChat(chat)" class="btn-close btn-close-white"></button>
             </span>
             <span class="col-md-9" id="message-span">{{ chat.message }}</span>
             <div class="vote-buttons col-md-3">
@@ -13,7 +13,7 @@
                   <span class="bi bi-hand-thumbs-up-fill"></span>
                   <span class="upvotes">{{ chat.upvotes }}</span>
                </button>
-               <button type="button" class="btn" (click)="downvote(chat)">
+               <button type="button" class="btn disable">
                   <span class="bi bi-hand-thumbs-down-fill"></span>
                </button>
             </div>
@@ -21,7 +21,7 @@
       </ng-container>
    </div>
    <div *ngIf="!hideSendChat" class="chat-footer">
-      <input type="text" placeholder="Type a message..." />
-      <button>Send</button>
+      <input type="text" placeholder="Type a message..." [(ngModel)]="chatMsg"/>
+      <button (click)="sendChat()">Send</button>
    </div>
 </div>

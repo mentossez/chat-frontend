@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { WebSocketService } from '../websocket.service';
+import { Chat } from '../chat.model';
 
 @Component({
    selector: 'app-chat-window',
@@ -10,65 +12,39 @@ export class ChatWindowComponent implements OnInit {
    @Input() hideSendChat: boolean = false;
    @Input() chats!: Chat[];
    @Input() isMostLikedWindow!: boolean;
+   isAdmin!: boolean;
+   chatMsg!: string;
+
+   constructor(private readonly websocketService: WebSocketService) {}
 
    ngOnInit(): void {
-      this.chats = [
-         {
-            username: 'PewDiePie', message: 'Hello',
-            upvotes: 0,
-            id: '1'
-         },
-         {
-            username: 'MrBeast', message: 'Hey there',
-            upvotes: 0,
-            id: '2'
-         },
-         {
-            username: 'LillySingh', message: 'How are you?',
-            upvotes: 0,
-            id: '3'
-         },
-         {
-            username: 'LoganPaul', message: 'how are you doing ? I am big fan, how to install node?',
-            upvotes: 0,
-            id: '4'
-         },
-         {
-            username: 'EmmaChamberlain', message: 'how are you doing ? I am big fan, how to install node? how are you doing ? I am big fan, how to install node?',
-            upvotes: 0,
-            id: '5'
-         },
-         {
-            username: 'NikkieTutorials', message: 'Hello',
-            upvotes: 0,
-            id: '6'
-         },
-         {
-            username: 'JamesCharles', message: 'Hey there',
-            upvotes: 0,
-            id: '7'
-         },
-         {
-            username: 'DavidDobrik', message: 'How are you?',
-            upvotes: 0,
-            id: '8'
-         },
-         {
-            username: 'CaseyNeistat', message: 'how are you doing ? I am big fan, how to install node?',
-            upvotes: 0,
-            id: '9'
-         },
-         {
-            username: 'JoeyGraceffa', message: 'how are you doing ? I am big fan, how to install node? how are you doing ? I am big fan, how to install node?',
-            upvotes: 0,
-            id: '10'
-         }
-      ];
-      this.chats.map(chat => chat.username = chat.username.toLocaleLowerCase());
+      this.isAdmin = true;
+   }
+
+   sendChat(): void {
+      if (this.chatMsg) {
+         const message = {
+            type: "SEND_MESSAGE",
+            payload: {
+              message: this.chatMsg,
+              userId: this.websocketService.userId,
+              roomId: "1"
+            }
+         };
+         this.websocketService.sendMessage(message);
+      }
    }
    
    upvote(chat: Chat): void {
-      chat.upvotes++;
+      const upvoteMsg = {
+         type: "UPVOTE_MESSAGE",
+         payload: {
+           userId: this.websocketService.userId,
+           roomId: '1',
+           chatId: chat.id
+         }
+      }
+      this.websocketService.sendMessage(upvoteMsg);
    }
    
    downvote(chat: Chat): void {
@@ -80,11 +56,4 @@ export class ChatWindowComponent implements OnInit {
    dismissChat(chat: Chat): void {
       this.chats = this.chats.filter(c => c.id !== chat.id);
    }
-}
-
-interface Chat {
-   id: string;
-   username: string;
-   message: string;
-   upvotes: number;
 }
