@@ -14,6 +14,15 @@ export class AppComponent {
   likedChats!: Chat[];
   mostLikedChats!: Chat[];
 
+  /*
+    To do -
+      username should be taken as input
+      removed/disconnected user message
+      dislike backend logic
+      Admin and user logic - only admin can dismiss message from most liked
+      logic for roomId ?? maybe
+  */
+
   constructor(
     private readonly websocketService: WebSocketService
   ) {
