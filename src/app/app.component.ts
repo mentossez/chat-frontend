@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'chat-frontend';
+  socket = new WebSocket("ws://localhost:8080", ['echo-protocol']);
 }
