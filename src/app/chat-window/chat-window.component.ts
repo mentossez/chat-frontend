@@ -32,6 +32,7 @@ export class ChatWindowComponent implements OnInit {
             }
          };
          this.websocketService.sendMessage(message);
+         this.chatMsg = '';
       }
    }
    
