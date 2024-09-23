@@ -14,7 +14,7 @@ export class WebSocketService {
 
   constructor() {
     this.userId = Math.floor(Math.random() * 1000).toString();
-    this.socket = new WebSocket('ws://localhost:8080', ['echo-protocol']);
+    this.socket = new WebSocket('wss://ws-chat-backend-cs1p.onrender.com', ['echo-protocol']);
 
     this.socket.onopen = () => {
       this.joinRoom();
