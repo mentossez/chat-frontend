@@ -9,14 +9,15 @@ import { Chat } from './chat.model';
 })
 export class AppComponent {
   title = 'chat-frontend';
-  userId!: string;
+  userName!: string;
   allChats!: Chat[];
   likedChats!: Chat[];
   mostLikedChats!: Chat[];
+  showPopup = true;
 
   /*
     To do -
-      username should be taken as input
+      username should be taken as input - done
       removed/disconnected user message
       dislike backend logic
       Admin and user logic - only admin can dismiss message from most liked
@@ -44,16 +45,8 @@ export class AppComponent {
     });
   }
 
-  initialiseUser() {
-    this.userId = Math.floor(Math.random() * 1000).toString();
-    const message = {
-      type: "JOIN_ROOM",
-      payload: {
-        name: "Ashish",
-        userId: this.userId,
-        roomId: "1"
-      }
-    };
-    this.websocketService.sendMessage(message);
+  join(): void {
+    this.websocketService.joinRoom(this.userName);
+    this.showPopup = false;
   }
 }

@@ -9,3 +9,11 @@
     <app-chat-window [chats]="mostLikedChats" [windowHeader]="'Most Liked - Needs Attention'" [hideSendChat]="true" [isMostLikedWindow]="true"></app-chat-window>
   </div>
 </div>
+
+<div *ngIf="showPopup" class="join-popup-modal">
+  <div class="popup-body">
+    <h2>Hi</h2>
+    <input type="text" placeholder="Enter username" [(ngModel)]="userName" />
+    <button class="btn btn-primary" (click)="join()">Join</button>
+  </div>
+</div>

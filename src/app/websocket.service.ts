@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { BehaviorSubject } from 'rxjs';
 import { Chat } from './chat.model';
 
 @Injectable({
@@ -17,7 +16,7 @@ export class WebSocketService {
     this.socket = new WebSocket('wss://ws-chat-backend-cs1p.onrender.com', ['echo-protocol']);
 
     this.socket.onopen = () => {
-      this.joinRoom();
+      console.log("Connected to server");
     };
 
     this.socket.onmessage = (event) => {
@@ -42,11 +41,11 @@ export class WebSocketService {
     };
   }
 
-  joinRoom(): void {
+  joinRoom(username: string): void {
     const message = {
       type: 'JOIN_ROOM',
       payload: {
-        name: 'Ashish',
+        name: username,
         userId: this.userId,
         roomId: '1'
       }

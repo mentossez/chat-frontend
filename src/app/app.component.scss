@@ -5,3 +5,42 @@
     padding: 10px;
   }
 }
+
+
+.join-popup-modal {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+
+  .popup-body {
+    padding: 32px;
+    background: #fff;
+    display: inline-grid;
+    max-width: 90%;
+    box-sizing: border-box;
+
+    h2 {
+      font-family: monospace;
+      margin-bottom: 18px;
+    }
+
+    input {
+      margin-bottom: 24px;
+      padding: 8px;
+      width: 100%;
+      max-width: 50vh;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 8px 16px;
+    }
+  }
+}
