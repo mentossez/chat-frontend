@@ -1,25 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { WebSocketService } from '../websocket.service';
-import { Chat } from '../chat.model';
+import { Chat, User } from '../chat.model';
 
 @Component({
    selector: 'app-chat-window',
    templateUrl: './chat-window.component.html',
    styleUrl: './chat-window.component.scss'
 })
-export class ChatWindowComponent implements OnInit {
+export class ChatWindowComponent {
    @Input() windowHeader!: string;
-   @Input() hideSendChat: boolean = false;
+   @Input() showSendChat: boolean = false;
    @Input() chats!: Chat[];
    @Input() isMostLikedWindow!: boolean;
-   isAdmin!: boolean;
+   @Input() userData!: User;
    chatMsg!: string;
 
    constructor(private readonly websocketService: WebSocketService) {}
-
-   ngOnInit(): void {
-      this.isAdmin = true;
-   }
 
    sendChat(): void {
       if (this.chatMsg) {
@@ -27,11 +23,11 @@ export class ChatWindowComponent implements OnInit {
             type: "SEND_MESSAGE",
             payload: {
               message: this.chatMsg,
-              userId: this.websocketService.userId,
-              roomId: "1"
+              userId: this.userData.id,
+              roomId: this.userData.roomId
             }
          };
-         this.websocketService.sendMessage(message);
+         this.websocketService.sendMessageToSocket(message);
          this.chatMsg = '';
       }
    }
@@ -40,12 +36,12 @@ export class ChatWindowComponent implements OnInit {
       const upvoteMsg = {
          type: "UPVOTE_MESSAGE",
          payload: {
-           userId: this.websocketService.userId,
-           roomId: '1',
+           userId: this.userData.id,
+           roomId: this.userData.roomId,
            chatId: chat.id
          }
       }
-      this.websocketService.sendMessage(upvoteMsg);
+      this.websocketService.sendMessageToSocket(upvoteMsg);
    }
    
    downvote(chat: Chat): void {

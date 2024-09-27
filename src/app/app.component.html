@@ -1,19 +1,24 @@
 <div class="main-container row">
   <div class="col-md-4 chat-window">
-    <app-chat-window [chats]="allChats" [windowHeader]="'Chats'"></app-chat-window>
+    <app-chat-window [chats]="allChats" [userData]="user" [windowHeader]="'Chats'" [showSendChat]="true"></app-chat-window>
   </div>
   <div class="col-md-4 chat-window">
-    <app-chat-window [chats]="likedChats" [windowHeader]="'Liked'" [hideSendChat]="true"></app-chat-window>
+    <app-chat-window [chats]="likedChats" [windowHeader]="'Liked'"></app-chat-window>
   </div>
   <div class="col-md-4 chat-window">
-    <app-chat-window [chats]="mostLikedChats" [windowHeader]="'Most Liked - Needs Attention'" [hideSendChat]="true" [isMostLikedWindow]="true"></app-chat-window>
+    <app-chat-window [chats]="mostLikedChats" [userData]="user" [windowHeader]="'Most Liked - Needs Attention'" [isMostLikedWindow]="true"></app-chat-window>
   </div>
 </div>
 
 <div *ngIf="showPopup" class="join-popup-modal">
   <div class="popup-body">
     <h2>Hi</h2>
-    <input type="text" placeholder="Enter username" [(ngModel)]="userName" />
-    <button class="btn btn-primary" (click)="join()">Join</button>
+    <input type="text" placeholder="Enter username" [(ngModel)]="user.name" />
+    <input type="text" placeholder="Room ID" [readonly]="user.isAdmin" [(ngModel)]="user.roomId"/>
+    <button class="btn btn-primary" [class.disabled]="!(user.name && user.roomId)" (click)="joinRoom()">Join room</button>
+    <button class="btn btn-success" [class.disabled]="user.roomId" (click)="createRoom()">{{ greenBtnName }}</button>
+    <p class="font-style-bold">To join, enter the Room ID your friend shared.</p>
+    <p>Make sure it's correct to connect!</p>
+    <p class="font-style-bold" style="padding-top: 8px;">Or, create a new room instead.</p>
   </div>
 </div>
