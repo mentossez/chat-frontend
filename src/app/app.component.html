@@ -3,7 +3,7 @@
     <app-chat-window [chats]="allChats" [userData]="user" [windowHeader]="'Chats'" [showSendChat]="true"></app-chat-window>
   </div>
   <div class="col-md-4 chat-window">
-    <app-chat-window [chats]="likedChats" [windowHeader]="'Liked'"></app-chat-window>
+    <app-chat-window [chats]="likedChats" [userData]="user" [windowHeader]="'Liked'"></app-chat-window>
   </div>
   <div class="col-md-4 chat-window">
     <app-chat-window [chats]="mostLikedChats" [userData]="user" [windowHeader]="'Most Liked - Needs Attention'" [isMostLikedWindow]="true"></app-chat-window>
@@ -13,7 +13,7 @@
 <div *ngIf="showPopup" class="join-popup-modal">
   <div class="popup-body">
     <h2>Hi</h2>
-    <input type="text" placeholder="Enter username" [(ngModel)]="user.name" />
+    <input type="text" placeholder="Enter username" [(ngModel)]="user.name" (keyup.enter)="joinRoom()"/>
     <input type="text" placeholder="Room ID" [readonly]="user.isAdmin" [(ngModel)]="user.roomId"/>
     <button class="btn btn-primary" [class.disabled]="!(user.name && user.roomId)" (click)="joinRoom()">Join room</button>
     <button class="btn btn-success" [class.disabled]="user.roomId" (click)="createRoom()">{{ greenBtnName }}</button>

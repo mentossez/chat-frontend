@@ -7,12 +7,10 @@ import { Chat } from './chat.model';
 })
 export class WebSocketService {
   private socket!: WebSocket;
-  userId!: string;
   allChats = new BehaviorSubject<any>(null);
   updateChat = new BehaviorSubject<any>(null);
 
   constructor() {
-    this.userId = Math.floor(Math.random() * 1000).toString();
     this.socket = new WebSocket('wss://ws-chat-backend-cs1p.onrender.com', ['echo-protocol']);
 
     this.socket.onopen = () => {
@@ -41,19 +39,7 @@ export class WebSocketService {
     };
   }
 
-  joinRoom(username: string): void {
-    const message = {
-      type: 'JOIN_ROOM',
-      payload: {
-        name: username,
-        userId: this.userId,
-        roomId: '1'
-      }
-    };
-    this.socket.send(JSON.stringify(message));
-  }
-
-  sendMessage(message: any) {
+  sendMessageToSocket(message: any) {
     this.socket.send(JSON.stringify(message));
   }
 }

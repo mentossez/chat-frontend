@@ -16,12 +16,17 @@ export class AppComponent {
   showPopup = true;
 
   /*
-    To do -
-      username should be taken as input - done
-      removed/disconnected user message
+    TO DO -
+      // username should be taken as input - DONE
+      // Admin and user logic - only admin can dismiss message from most liked - DONE
+      // logic for roomId ?? maybe - DONE
+      user joined ui message
+      user disconnected ui message
       dislike backend logic
-      Admin and user logic - only admin can dismiss message from most liked
-      logic for roomId ?? maybe - done
+      most liked window heading different for admin and user
+
+    ISSUES FOUND -
+      remove chat from most liked section and like any chat removed message will reappear
   */
 
   constructor(

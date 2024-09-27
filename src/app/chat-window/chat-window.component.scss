@@ -46,6 +46,10 @@
       }
    }
 
+   .message {
+      overflow-wrap: break-word;
+   }
+
    .vote-buttons {
       gap: 8px;
       display: flex;
