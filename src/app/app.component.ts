@@ -24,6 +24,7 @@ export class AppComponent {
       user disconnected ui message
       dislike backend logic
       most liked window heading different for admin and user
+      multilingual
 
     ISSUES FOUND -
       remove chat from most liked section and like any chat removed message will reappear
