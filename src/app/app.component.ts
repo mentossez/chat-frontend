@@ -49,7 +49,7 @@ export class AppComponent {
         }
       });
       this.likedChats = this.allChats.filter(chat => chat.upvotes >= 3);
-      this.mostLikedChats = this.allChats.filter(chat => chat.upvotes >= 5);
+      this.mostLikedChats = this.allChats.filter(chat => chat.upvotes >= 10);
     });
   }
 
