@@ -34,6 +34,9 @@ export class WebSocketService {
           id: payload.chatId,
           upvotes: payload.upvotes
         };
+        if (payload.isDismissed) {
+          chat.isDismissed = payload.isDismissed;
+        }
         this.updateChat.next(chat);
       }
     };

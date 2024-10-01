@@ -32,13 +32,14 @@ export class ChatWindowComponent {
       }
    }
    
-   upvote(chat: Chat): void {
+   updateChat(chat: Chat, isDismissed = false): void {
       const upvoteMsg = {
-         type: "UPVOTE_MESSAGE",
+         type: "UPDATE_MESSAGE",
          payload: {
            userId: this.userData.id,
            roomId: this.userData.roomId,
-           chatId: chat.id
+           chatId: chat.id,
+           isDismissed
          }
       }
       this.websocketService.sendMessageToSocket(upvoteMsg);
@@ -48,9 +49,5 @@ export class ChatWindowComponent {
       if (chat.upvotes > 0) {
          chat.upvotes--;
       }
-   }
-
-   dismissChat(chat: Chat): void {
-      this.chats = this.chats.filter(c => c.id !== chat.id);
    }
 }

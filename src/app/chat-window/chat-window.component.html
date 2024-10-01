@@ -2,14 +2,14 @@
    <div class="chat-header">{{ windowHeader }}</div>
    <div class="chat-body" [class.with-send-chat]="showSendChat">
       <ng-container *ngFor="let chat of chats">
-         <div class="message row">
+         <div *ngIf="!chat.isDismissed" class="message row">
             <span class="message-header">
                <span class="user-name col-md-12">&#64;{{chat.username}}</span>
-               <button *ngIf="isMostLikedWindow && userData?.isAdmin" (click)="dismissChat(chat)" class="btn-close btn-close-white"></button>
+               <button *ngIf="isMostLikedWindow && userData?.isAdmin" (click)="updateChat(chat, true)" class="btn-close btn-close-white"></button>
             </span>
             <span class="col-md-9" style="word-break: break-word;" id="message-span">{{ chat.message }}</span>
             <div class="vote-buttons col-md-3">
-               <button type="button" class="btn" (click)="upvote(chat)">
+               <button type="button" class="btn" (click)="updateChat(chat)">
                   <span class="bi bi-hand-thumbs-up-fill"></span>
                   <span class="upvotes">{{ chat.upvotes }}</span>
                </button>

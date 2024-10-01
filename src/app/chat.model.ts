@@ -3,6 +3,7 @@ export interface Chat {
    username: string;
    message: string;
    upvotes: number;
+   isDismissed?: boolean;
 }
 
 export class User {

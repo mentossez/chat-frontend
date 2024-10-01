@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { WebSocketService } from './websocket.service';
 import { Chat, User } from './chat.model';
+import _ from 'lodash'
 
 @Component({
   selector: 'app-root',
@@ -24,7 +25,8 @@ export class AppComponent {
       user disconnected ui message
       dislike backend logic
       most liked window heading different for admin and user
-      multilingual
+
+      type msg in your own language, it will convert to their language
 
     ISSUES FOUND -
       remove chat from most liked section and like any chat removed message will reappear
@@ -44,13 +46,18 @@ export class AppComponent {
       this.allChats?.map(chat => chat.username = chat.username.toLowerCase());
     });
     this.websocketService.updateChat.subscribe((updatedChat: Chat) => {
-      this.allChats?.map(chat => {
-        if (chat.id === updatedChat.id) {
-          chat.upvotes = updatedChat.upvotes;
-        }
-      });
+      const chatToUpdate = this.allChats.find(chat => chat.id === updatedChat.id);
+      if (chatToUpdate) {
+        chatToUpdate.upvotes = updatedChat.upvotes;
+      }
       this.likedChats = this.allChats.filter(chat => chat.upvotes >= 3);
-      this.mostLikedChats = this.allChats.filter(chat => chat.upvotes >= 10);
+      const allChatsCopy = _.cloneDeep(this.allChats);
+      this.mostLikedChats = allChatsCopy.filter(chat => chat.upvotes >= 10).map(chat => {
+        if (chat.id === updatedChat.id) {
+          chat.isDismissed = updatedChat.isDismissed
+        }
+        return chat;
+      });
     });
   }
 
